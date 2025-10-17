@@ -6,9 +6,9 @@ const prisma = new PrismaClient();
 
 productRouter.post("/", async (req, res) => {
   try {
-    const { name, price, stock } = req.body;
+    const { name, price, stock,  } = req.body;
 
-    if (!name || !price || stock == null) {
+    if (!name || !price || stock == null ) {
       return res.status(400).json({ error: "All fildes are required" });
     }
 
