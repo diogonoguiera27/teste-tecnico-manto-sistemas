@@ -2,8 +2,21 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export class ProductRepository {
-  async create(name: string, price: number, stock: number) {
+interface IRequestCreate{
+    name: string;
+    price: number;
+    stock: number;
+}
+
+interface IRequestUpdate {
+  id:number;
+  name:string;
+  price:number;
+  stock:number;
+}
+
+export class ProductModel {
+  async create({name, price, stock}: IRequestCreate) {
     return prisma.product.create({
       data: {
         name,
@@ -23,7 +36,7 @@ export class ProductRepository {
     });
   }
 
-  async update(id: number, name: string, price: number, stock: number) {
+  async update({id,name,price,stock}:IRequestUpdate) {
     return prisma.product.update({
       where: { id },
       data: {

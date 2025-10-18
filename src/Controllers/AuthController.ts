@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { loginUserService } from "../../Services/auth/postAuthLoginService";
-import { registerUserService } from "../../Services/auth/postAuthRegisterService";
+import { loginUserService } from "../Services/auth/postAuthLoginService";
+import { registerUserService } from "../Services/auth/postAuthRegisterService";
 
 
 export default class AuthController {

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import CepController from "../Controllers/Cep";
+import CepController from "../Controllers/CepController";
 
 
 export const cepRouter = Router();

@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
 
 import { PrismaClient } from "@prisma/client";
-import { createOrderService } from "../../Services/Order/createOrdersService";
-import { getAllOrdersService } from "../../Services/Order/getOrderService";
-import { getOrdersByUserService } from "../../Services/Order/getIdOrderService";
+import { createOrderService } from "../Services/Order/createOrdersService";
+import { getAllOrdersService } from "../Services/Order/getOrderService";
+import { getOrdersByUserService } from "../Services/Order/getIdOrderService";
+import { deleteOrderService } from "../Services/Order/deleteOrderService";
 
 const prisma = new PrismaClient();
 
@@ -18,7 +19,7 @@ export default class OrderController {
         });
       }
 
-      // validações ficam no controller
+      
       const user = await prisma.user.findUnique({ where: { id: userId } });
       if (!user) {
         return res.status(404).json({ error: "Usuário não encontrado" });
@@ -33,10 +34,10 @@ export default class OrderController {
         return res.status(400).json({ error: "Estoque insuficiente" });
       }
 
-      // service apenas faz as operações no banco
+      
       const order = await createOrderService(userId, productId, quantity);
 
-      // atualiza estoque
+      
       await prisma.product.update({
         where: { id: productId },
         data: { stock: product.stock - quantity },
@@ -86,4 +87,65 @@ export default class OrderController {
       return res.status(500).json({ error: "Erro interno no servidor" });
     }
   }
+
+  async update(req: Request, res: Response) {
+    try {
+      const id = Number(req.params.id);
+      const { quantity, productId } = req.body;
+
+      if (isNaN(id)) return res.status(400).json({ error: "ID inválido." });
+
+      const order = await prisma.order.findUnique({ where: { id } });
+      if (!order) return res.status(404).json({ error: "Pedido não encontrado." });
+
+      const product = await prisma.product.findUnique({ where: { id: productId || order.productId } });
+      if (!product) return res.status(404).json({ error: "Produto não encontrado." });
+
+      
+      if (quantity && quantity !== order.quantity) {
+        const diff = quantity - order.quantity;
+        if (diff > 0 && product.stock < diff)
+          return res.status(400).json({ error: "Estoque insuficiente para aumentar a quantidade." });
+
+        await prisma.product.update({
+          where: { id: product.id },
+          data: { stock: product.stock - diff },
+        });
+      }
+
+      const updatedOrder = await prisma.order.update({
+        where: { id },
+        data: {
+          quantity: quantity ?? order.quantity,
+          productId: productId ?? order.productId,
+        },
+        include: { product: true, user: true },
+      });
+
+      return res.json({
+        message: "Pedido atualizado com sucesso!",
+        order: updatedOrder,
+      });
+    } catch (error) {
+      console.error("Erro ao atualizar pedido:", error);
+      return res.status(500).json({ error: "Erro interno no servidor." });
+    }
+  }
+
+
+  async delete(req: Request, res: Response) {
+      try {
+        const id = Number(req.params.id);
+  
+        if (isNaN(id)) {
+          return res.status(400).json({ error: "ID inválido." });
+        }
+  
+        await deleteOrderService(id);
+        return res.json({ message: "Pedido Deletado com  successfully" });
+      } catch (error) {
+        console.error("Error ao deletar pedido:", error);
+        return res.status(500).json({ error: "Error Interno no Servidor" });
+      }
+    }
 }

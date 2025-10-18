@@ -10,7 +10,7 @@ const routes = Router();
 
 routes.use("/cep", cepRouter)
 routes.use("/auth" , authRouter)
-routes.use("/products",authMiddleware, productRouter)
-routes.use("/orders",authMiddleware, orderRouter)
+routes.use("/products", authMiddleware, productRouter)
+routes.use("/orders", authMiddleware, orderRouter)
 
 export default routes

@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
-import { createProductsService } from "../../Services/Product/createProductsService";
-import { deleteProductsService } from "../../Services/Product/deleteProductsService";
-import { getAllProductsService } from "../../Services/Product/getAllProductsService";
-import { updateProductsService } from "../../Services/Product/updateProductsService";
+import { createProductsService } from "../Services/Product/createProductsService";
+import { deleteProductsService } from "../Services/Product/deleteProductsService";
+import { getAllProductsService } from "../Services/Product/getAllProductsService";
+import { updateProductsService } from "../Services/Product/updateProductsService";
+import { getAllByProductsService } from "..//Services/Product/getAllByProductsService";
 
 
 export default class ProductController {
@@ -28,6 +29,22 @@ export default class ProductController {
       return res.json(products);
     } catch (error) {
       console.error("Error fetching products:", error);
+      return res.status(500).json({ error: "Internal Server error" });
+    }
+  }
+
+  async getAllById( req: Request, res: Response) {
+    try {
+      const id = Number(req.params.id);
+
+      if (isNaN(id)) {
+        return res.status(400).json({ error: "Invalid ID" });
+      }
+
+      const products = await getAllByProductsService(id);
+      return res.json(products);
+    } catch (error) {
+      console.error("Error ao busca usuario:", error);
       return res.status(500).json({ error: "Internal Server error" });
     }
   }
