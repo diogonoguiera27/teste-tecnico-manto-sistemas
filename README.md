@@ -5,37 +5,37 @@
 Antes de começar, certifique-se de ter instalado:
 - **Node.js** (versão 18 ou superior)
 - **MySQL**
-- **npm** 
+- **pnpm** 
 
 
-1 **Acessar o repositório no GitHub**
+- **Acessar o repositório no GitHub**
    [https://github.com/diogonoguiera27](https://github.com/diogonoguiera27)
 
 
-2. **Clonar o repositório**  
+- **Clonar o repositório**  
    git clone https://github.com/diogonoguiera27/teste-tecnico-manto-sistemas.git
 
-3 **Entrar na pasta do projeto**
+- **Entrar na pasta do projeto**
   cd teste-tecnico-manto-sistemas
 
-4 **Instalar as dependências**
-  npm install
+- **Instalar as dependências**
+   pnpm install
 
-5 **Criar o arquivo .env na raiz do projeto**
+- **Criar o arquivo .env na raiz do projeto**
     DATABASE_URL="mysql://root:@localhost:3306/teste_tecnico"
     JWT_SECRET="superSecretKey$123@Manto"
     INVERTEXTO_API_KEY="22355|ibWdovcyV5vbNzeXPT2ObFeaARyLzND3" 
 
-6 **O projeto utiliza o MySQL com o Prisma ORM para gerenciar o banco de dados.O script SQL com a estrutura das tabelas está incluído em:**
+- **O projeto utiliza o MySQL com o Prisma ORM para gerenciar o banco de dados.O script SQL com a estrutura das tabelas está incluído em:**
 
     /prisma/database_script.sql
 
-**Se o banco for criado manualmente, basta rodar:**
+- **Se o banco for criado manualmente, basta rodar:**
 
-  npm install
-  npm run dev
+  pnpm install
+   pnpm run dev
 
-**Caso o banco não tenha sido criado manualmente, rode os comandos abaixo para gerar as tabelas automaticamente:**
+- **Caso o banco não tenha sido criado manualmente, rode os comandos abaixo para gerar as tabelas automaticamente:**
 
   npx prisma migrate dev
   npx prisma generate
@@ -43,10 +43,10 @@ Antes de começar, certifique-se de ter instalado:
 
 ## Execução
 
-1 **Para rodar o servidor basta rodar esse comando**
-     npm run dev
+- **Para rodar o servidor basta rodar esse comando**
+      pnpm run dev
 
-2 **Servidor Sera em**
+- **Servidor Sera em**
      http://localhost:3333
      
 
