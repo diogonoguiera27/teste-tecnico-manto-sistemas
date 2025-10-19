@@ -64,9 +64,9 @@ Depois de fazer login na rota `/auth/login`, será retornado um token.
 Esse token deve ser colocado no **Insomnia** da seguinte forma:
 
 #### Opção 1: Aba Auth
- -Vá até a aba Auth.  
- -Selecione o tipo Bearer Token.  
- -Cole o token retornado no campo Token.
+ - Vá até a aba Auth.  
+ - Selecione o tipo Bearer Token.  
+ - Cole o token retornado no campo Token.
 
 ####  Opção 2: Aba Headers
 - Vá até a aba Headers.  
