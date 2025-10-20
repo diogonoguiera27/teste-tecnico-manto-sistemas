@@ -2,7 +2,7 @@ import { Router } from "express";
 import OrderController from "../Controllers/OrderController";
 
 
-export const orderRouter = Router();
+ const orderRouter: Router = Router();
 const orderController = new OrderController();
 
 orderRouter.post("/", orderController.create.bind(orderController));
