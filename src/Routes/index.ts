@@ -1,12 +1,13 @@
 import { Router } from "express";
-import { productRouter } from "./product.routes";
-import { orderRouter } from "./order.routes";
-import { authRouter } from "./auth.routes";
-import { authMiddleware } from "../middlewares/authMiddleware";
-import { cepRouter } from "./cep.routes";
+import cepRouter from "./cep.routes";
+import authRouter from "./auth.routes";
+import { authMiddleware } from "src/middlewares/authMiddleware";
+import productRouter from "./product.routes";
+import orderRouter from "./order.routes";
 
 
-const routes = Router();
+
+const routes: Router = Router();
 
 routes.use("/cep", cepRouter)
 routes.use("/auth" , authRouter)
